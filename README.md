@@ -9,8 +9,7 @@ This repository contains a project focused on detecting fraudulent credit card t
 - [Installation](#installation)
 - [Usage](#usage)
 - [Results](#results)
-- [Contributing](#contributing)
-- [License](#license)
+
 
 ## About the Dataset
 The dataset consists of credit card transactions with the following features:
@@ -33,7 +32,7 @@ To run the project locally, follow these steps:
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-username/Credit-Card-Fraudulent-Transaction-Detection-Model.git
+    git clone https://github.com/codewithshivam01/Credit-Card-Fraudulant-Transaction-Detection-Model.git
     cd Credit-Card-Fraudulent-Transaction-Detection-Model
     ```
 
@@ -56,3 +55,42 @@ import pandas as pd
 
 credit_card_data = pd.read_csv('data/creditcard.csv')
 print(credit_card_data.head())
+```
+
+
+## Data Preprocessing:
+Check for missing values and handle them if any. Separate the data into legitimate (legit) and fraudulent (fraud) transactions. Balance the dataset by sampling an equal number of legitimate transactions.
+```python
+legit = credit_card_data[credit_card_data.Class == 0]
+fraud = credit_card_data[credit_card_data.Class == 1]
+
+legit_sample = legit.sample(n=492)
+new_df = pd.concat([legit_sample, fraud], axis=0)
+```
+ ## Model Training and Evaluation:
+ Split the data into training and test sets. Train a Logistic Regression model. Evaluate the model's performance on both training and test sets.
+ ```python
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+X = new_df.drop(columns='Class', axis=1)
+Y = new_df['Class']
+
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, stratify=Y, random_state=2)
+
+model = LogisticRegression()
+model.fit(X_train, Y_train)
+
+X_train_prediction = model.predict(X_train)
+training_data_accuracy = accuracy_score(X_train_prediction, Y_train)
+print('Accuracy on Training data : ', training_data_accuracy)
+
+X_test_prediction = model.predict(X_test)
+test_data_accuracy = accuracy_score(X_test_prediction, Y_test)
+print('Accuracy score on Test Data : ', test_data_accuracy)
+```
+
+## Results
+* Accuracy on Training data: 93.77%
+* Accuracy score on Test Data: 89.85%
