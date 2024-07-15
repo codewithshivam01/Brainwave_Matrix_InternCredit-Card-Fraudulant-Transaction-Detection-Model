@@ -1,114 +1,58 @@
-
-
-# Credit-Card-Fraudulent-Transaction-Detection-Model
+# Credit Card Fraudulent Transaction Detection Model
 
 ## Overview
-
-This repository contains the implementation of a machine learning model designed to detect fraudulent credit card transactions. The goal of this project is to build a robust model that can accurately identify potentially fraudulent transactions from a dataset of credit card transactions.
+This repository contains a project focused on detecting fraudulent credit card transactions using machine learning. The dataset used for training and evaluation is highly imbalanced, with a significant majority of transactions being legitimate and a small fraction being fraudulent. The project employs data preprocessing, sampling techniques, and a Logistic Regression model to achieve effective fraud detection.
 
 ## Table of Contents
-
-- [Overview](#overview)
-- [Dataset](#dataset)
+- [About the Dataset](#about-the-dataset)
+- [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Model](#model)
-- [Evaluation](#evaluation)
 - [Results](#results)
 - [Contributing](#contributing)
 - [License](#license)
 
-## Dataset
+## About the Dataset
+The dataset consists of credit card transactions with the following features:
+- **Time**: Number of seconds elapsed between the transaction and the first transaction in the dataset.
+- **V1 to V28**: Anonymized features resulting from a PCA transformation of the original features.
+- **Amount**: Transaction amount in USD.
+- **Class**: Label indicating whether the transaction is fraudulent (1) or legitimate (0).
 
-The dataset used in this project is the [Credit Card Fraud Detection dataset](https://www.kaggle.com/mlg-ulb/creditcardfraud) from Kaggle. It contains transactions made by credit cards in September 2013 by European cardholders.
+The dataset contains 284,807 transactions, with 492 fraudulent transactions.
 
-- The dataset presents transactions that occurred in two days, with 492 frauds out of 284,807 transactions.
-- It is highly unbalanced, with the positive class (frauds) accounting for 0.172% of all transactions.
-- Features V1, V2, ..., V28 are the result of a PCA transformation. The only features which have not been transformed with PCA are `Time` and `Amount`.
+## Project Structure
+The project is organized as follows:
+- `data/`: Directory containing the dataset.
+- `notebooks/`: Jupyter notebooks used for data exploration and model training.
+- `src/`: Source code for data preprocessing, model training, and evaluation.
+- `README.md`: Project documentation.
 
 ## Installation
-
-To use this repository, follow these steps:
+To run the project locally, follow these steps:
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/Credit-Card-Fraudulent-Transaction-Detection-Model.git
+    ```sh
+    git clone https://github.com/your-username/Credit-Card-Fraudulent-Transaction-Detection-Model.git
     cd Credit-Card-Fraudulent-Transaction-Detection-Model
     ```
 
-2. Create a virtual environment and activate it:
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+2. Create and activate a virtual environment:
+    ```sh
+    python3 -m venv env
+    source env/bin/activate
     ```
 
-3. Install the required packages:
-    ```bash
+3. Install the required dependencies:
+    ```sh
     pip install -r requirements.txt
     ```
 
 ## Usage
+### Data Loading and Exploration:
+Load the dataset and explore its structure and statistical properties.
+```python
+import pandas as pd
 
-To train the model and make predictions, follow these steps:
-
-1. **Preprocess the Data**: Run the preprocessing script to prepare the data for training.
-    ```bash
-    python preprocess.py
-    ```
-
-2. **Train the Model**: Train the machine learning model on the preprocessed data.
-    ```bash
-    python train.py
-    ```
-
-3. **Evaluate the Model**: Evaluate the trained model using various metrics.
-    ```bash
-    python evaluate.py
-    ```
-
-4. **Make Predictions**: Use the trained model to make predictions on new data.
-    ```bash
-    python predict.py
-    ```
-
-## Model
-
-The model is built using the following machine learning algorithms:
-
-- Logistic Regression
-- Decision Trees
-- Random Forest
-- Gradient Boosting
-- Neural Networks
-
-The final model is selected based on its performance on the evaluation metrics.
-
-## Evaluation
-
-The model is evaluated using the following metrics:
-
-- Accuracy
-- Precision
-- Recall
-- F1-Score
-- ROC-AUC
-
-Due to the imbalance in the dataset, precision, recall, and F1-score are considered more important than accuracy.
-
-## Results
-
-The final model achieved the following results on the test set:
-
-- Precision: X.XX
-- Recall: X.XX
-- F1-Score: X.XX
-- ROC-AUC: X.XX
-
-## Contributing
-
-Contributions are welcome! If you have any suggestions, bug reports, or pull requests, please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
+credit_card_data = pd.read_csv('data/creditcard.csv')
+print(credit_card_data.head())
